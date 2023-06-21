@@ -1,27 +1,27 @@
 
 ## Global Variables
-> INPUT_SIZE : size of the input audio files
-> HIDDEN_SIZE :  size of the hidden neurons
-> NUM_LAYERS : number of layers in rnn
-> LR : learning rate
-> TARGET_SAMPLE_RATE : sample rate in mel-spectrogram
-> NUM_SAMPLES : length of input audio file
-> N_FFT : size of Fast Fourier Transformation 
-> HOP_LENGTH : length of hop between Short-Time Fourier Transformation windows
-> N_MELS : number of mel filter banks
-> SEQUENCE_LENGTH : length of input in rnn
-> OUTPUT_SIZE : size of the output neuron
-> CHUNK : number of frames in the buffer
-> FORMAT : format of audio input 
-> CHANNELS : number of the channels of the device
-> RATE : number of samples collected per second
-> BUFFER_SIZE : frames per buffer
-> RECORD_SECONDS : number of seconds to record in each audio
-> WAVE_OUTPUT_FILENAME : the file to store the output in wave format
-> DROP : probability to drop each neuron
-> mel_spectrogram : used as a transformation from an audio file into a tensor
-> p : an instance of pyaudio
-> stream : an audio stream opened using pyaudio
+> INPUT_SIZE : size of the input audio files <br/>
+> HIDDEN_SIZE :  size of the hidden neurons<br/>
+> NUM_LAYERS : number of layers in rnn<br/>
+> LR : learning rate<br/>
+> TARGET_SAMPLE_RATE : sample rate in mel-spectrogram<br/>
+> NUM_SAMPLES : length of input audio file<br/>
+> N_FFT : size of Fast Fourier Transformation <br/>
+> HOP_LENGTH : length of hop between Short-Time Fourier Transformation windows<br/>
+> N_MELS : number of mel filter banks<br/>
+> SEQUENCE_LENGTH : length of input in rnn<br/>
+> OUTPUT_SIZE : size of the output neuron<br/>
+> CHUNK : number of frames in the buffer<br/>
+> FORMAT : format of audio input <br/>
+> CHANNELS : number of the channels of the device<br/>
+> RATE : number of samples collected per second<br/>
+> BUFFER_SIZE : frames per buffer<br/>
+> RECORD_SECONDS : number of seconds to record in each audio<br/>
+> WAVE_OUTPUT_FILENAME : the file to store the output in wave format<br/>
+> DROP : probability to drop each neuron<br/>
+> mel_spectrogram : used as a transformation from an audio file into a tensor<br/>
+> p : an instance of pyaudio<br/>
+> stream : an audio stream opened using pyaudio<br/>
 ## Dateset
 > this is a class
 * annotation_file : the path of annotation file.

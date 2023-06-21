@@ -1,43 +1,27 @@
-## Experiments
 
-> Record 1
-
-```
-num_samples = 16000
-target_sample_rate = 16000
-learning_rate = 0.005
-drop = 0.5
-
-mel_spectrogram = torchaudio.transforms.MelSpectrogram(
-    sample_rate=target_sample_rate,
-    n_fft=400,
-    hop_length=512,
-    n_mels=84
-)
-
-sequence_length = 84
-input_size = 32
-output_size = 2
-hidden_size = 2
-num_layers = 5
-
-optimizer = optim.Adam(model_0.parameters(),lr = learning_rate)
-loss_fn = nn.BCELoss()
-```
-
-Below shows a graph plotting the losses over 2280 times of trainning for 10 epochs.
-
-![A Graph](Assets/igures/Figure_1.png)
-
-> Record 2
-
-```
-Params are not modified.
-Model trained upon last record.
-```
-
-Below shows a graph plotting the losses over 2280 times of trainning for additional 10 epochs.
-
+## Global Variables
+> INPUT_SIZE : size of the input audio files
+> HIDDEN_SIZE :  size of the hidden neurons
+> NUM_LAYERS : number of layers in rnn
+> LR : learning rate
+> TARGET_SAMPLE_RATE : sample rate in mel-spectrogram
+> NUM_SAMPLES : length of input audio file
+> N_FFT : size of Fast Fourier Transformation 
+> HOP_LENGTH : length of hop between Short-Time Fourier Transformation windows
+> N_MELS : number of mel filter banks
+> SEQUENCE_LENGTH : length of input in rnn
+> OUTPUT_SIZE : size of the output neuron
+> CHUNK : number of frames in the buffer
+> FORMAT : format of audio input 
+> CHANNELS : number of the channels of the device
+> RATE : number of samples collected per second
+> BUFFER_SIZE : frames per buffer
+> RECORD_SECONDS : number of seconds to record in each audio
+> WAVE_OUTPUT_FILENAME : the file to store the output in wave format
+> DROP : probability to drop each neuron
+> mel_spectrogram : used as a transformation from an audio file into a tensor
+> p : an instance of pyaudio
+> stream : an audio stream opened using pyaudio
 ## Dateset
 > this is a class
 * annotation_file : the path of annotation file.
@@ -129,5 +113,80 @@ def __getitem__(self, index):
         signal= self.transformation(signal)
         return signal, label
 ```
+
+## myModule
+> This is a class
+* num_layers : number of layers of the recurrent network
+* input_size : the size of the input audio files
+* hidden_size : number of hidden neurons
+* output_size : the size of the output layer
+* drop : probability to drop each neuron
+* rnn : the recurrent neuron network
+* fc : a linear network to reshape
+  
+#### functions
+>__init__ <br/>
+initialize variables
+```code
+def __init__(self,sequence_length,input_size,hidden_size,num_layers,output_size):
+        super(myModule,self).__init__()
+        self.num_layers = num_layers
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.output_size = output_size
+        self.drop = nn.Dropout(p=DROP)
+        self.rnn = nn.RNN(input_size,hidden_size,num_layers,nonlinearity='tanh',batch_first=True)
+        self.fc = nn.Linear(sequence_length,1)
+```
+>forward <br/>
+modify the input variables into output using rnn, drop, fc, and sigmoid activation fucntion
+```code
+def forward(self,x,hidden):
+        out_pre,hidden = self.rnn(x,hidden)
+        out_pre = self.drop(out_pre)
+        out = self.fc(out_pre.T)
+        out = nn.Sigmoid()(out)
+        return out
+```
+
+## Experiments
+
+> Record 1
+
+```
+num_samples = 16000
+target_sample_rate = 16000
+learning_rate = 0.005
+drop = 0.5
+
+mel_spectrogram = torchaudio.transforms.MelSpectrogram(
+    sample_rate=target_sample_rate,
+    n_fft=400,
+    hop_length=512,
+    n_mels=84
+)
+
+sequence_length = 84
+input_size = 32
+output_size = 2
+hidden_size = 2
+num_layers = 5
+
+optimizer = optim.Adam(model_0.parameters(),lr = learning_rate)
+loss_fn = nn.BCELoss()
+```
+
+Below shows a graph plotting the losses over 2280 times of trainning for 10 epochs.
+
+![A Graph](Assets/igures/Figure_1.png)
+
+> Record 2
+
+```
+Params are not modified.
+Model trained upon last record.
+```
+
+Below shows a graph plotting the losses over 2280 times of trainning for additional 10 epochs.
 ![A Graph](Assets/Figures/Figure_2.png)
 

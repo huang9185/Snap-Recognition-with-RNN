@@ -193,5 +193,5 @@ for i in range(epochs):
 
 ## Contact
 
-crankyB@github.com
+crankyB@github.com <br/>
 huang9185@github.com

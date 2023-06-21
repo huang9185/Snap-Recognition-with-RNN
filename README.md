@@ -190,3 +190,8 @@ for i in range(epochs):
 ![A Graph](Assets/Figures/Figure_4(Live).png)
 
 ![A Graph](Assets/Figures/Figure_5(Live20).png)
+
+## Contact
+
+crankyB@github.com
+huang9185@github.com

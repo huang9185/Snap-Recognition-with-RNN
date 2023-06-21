@@ -181,6 +181,12 @@ for i in range(epochs):
         losses.append(rate/sum)
         test_output.append(correct)
 ```
-![A Graph](Assets/igures/Figure_1.png)
+![A Graph](Assets/Figures/Figure_1.png)
 
 ![A Graph](Assets/Figures/Figure_2.png)
+
+![A Graph](Assets/Figures/Figure_3(False).png)
+
+![A Graph](Assets/Figures/Figure_4(Live).png)
+
+![A Graph](Assets/Figures/Figure_5(Live20).png)

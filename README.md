@@ -149,44 +149,38 @@ def forward(self,x,hidden):
         return out
 ```
 
-## Experiments
+## Experiments : Trainning loop
 
-> Record 1
-
+>Prediction Function
+This function predict the label of sample from output tensor.
 ```
-num_samples = 16000
-target_sample_rate = 16000
-learning_rate = 0.005
-drop = 0.5
-
-mel_spectrogram = torchaudio.transforms.MelSpectrogram(
-    sample_rate=target_sample_rate,
-    n_fft=400,
-    hop_length=512,
-    n_mels=84
-)
-
-sequence_length = 84
-input_size = 32
-output_size = 2
-hidden_size = 2
-num_layers = 5
-
-optimizer = optim.Adam(model_0.parameters(),lr = learning_rate)
-loss_fn = nn.BCELoss()
+def pred(y_pred,y):
+  if(y_pred[0]>y_pred[1]):
+    return 1-y
+  else:
+    return y
 ```
-
-Below shows a graph plotting the losses over 2280 times of trainning for 10 epochs.
-
+>Tranning loop
+This loop through every sample in the dataset, predict the output and plot the correctness diagram.
+```code
+for i in range(epochs):
+    for x,y in dataloader:
+        hidden = torch.zeros(model_0.num_layers,model_0.hidden_size) # every time go through a sequence , initialize the hidden
+        y_pred = model_0(torch.squeeze(x,1).reshape(40,400),hidden)
+        loss = loss_fn(y_pred,torch.tensor([[1.0],[0.0]]))
+        correct = pred(y_pred,y)
+        # Snapping is True
+        if y==1:
+          loss = loss_fn(y_pred,torch.tensor([[0.0],[1.0]]))
+          correct = pred(y_pred,y)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        sum+=1
+        rate+=correct
+        losses.append(rate/sum)
+        test_output.append(correct)
+```
 ![A Graph](Assets/igures/Figure_1.png)
 
-> Record 2
-
-```
-Params are not modified.
-Model trained upon last record.
-```
-
-Below shows a graph plotting the losses over 2280 times of trainning for additional 10 epochs.
 ![A Graph](Assets/Figures/Figure_2.png)
-
